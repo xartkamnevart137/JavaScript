@@ -1,0 +1,24 @@
+const { Octokit } = require("@octokit/core");
+
+// Ваш персональный токен доступа GitHub
+const access_token = 'YOUR_ACCESS_TOKEN';
+
+// Создание экземпляра объекта Octokit
+const octokit = new Octokit({ auth: access_token });
+
+// Имя владельца репозитория и имя репозитория
+const owner = 'username';
+const repo = 'repository-name';
+
+// Получение списка коммитов
+octokit.request(`GET /repos/${owner}/${repo}/commits`)
+  .then((response) => {
+    const commits = response.data;
+    console.log(`Список коммитов для репозитория ${owner}/${repo}:`);
+    commits.forEach((commit) => {
+      console.log(commit.sha);
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
